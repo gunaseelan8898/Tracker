@@ -4,11 +4,22 @@ import { useDispatch } from 'react-redux'
 
 import Colors from '../constants/Colors'
 import * as placesActions from '../store/places-actions'
+import ImgPicker from '../components/ImagePicker'
 
-const NewPlaceScreen = () => {
+const NewPlaceScreen = props => {
     const[titleValue,setTitlevalue] = useState('')
+    const[selectedImage,setSelectedImage]=useState()
 
     const dispatch = useDispatch();
+
+    const pressHandler = () =>{
+         dispatch(placesActions.addPlace(titleValue,selectedImage)),
+         props.navigation.goBack()
+    }
+
+    const imageTakenHandler = imagePath => {
+        setSelectedImage(imagePath)
+    }
 
     return (
         <ScrollView>
@@ -17,11 +28,9 @@ const NewPlaceScreen = () => {
             <TextInput style={styles.textInput} 
             value={titleValue} 
             onChangeText={text => setTitlevalue(text)} />
+            <ImgPicker onImageTaken={imageTakenHandler} />
             <Button title="Save Places" color={Colors.primary} 
-            onPress={()=>{
-                dispatch(placesActions.addPlace(titleValue)
-                )
-            }}/>
+            onPress={pressHandler}/>
         </View>
         </ScrollView>
     )
