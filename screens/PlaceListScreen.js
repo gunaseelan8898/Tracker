@@ -11,7 +11,7 @@ const PlaceListScreen = props => {
     const places = useSelector(state => state.places.places)
     return (
        <FlatList data={places} 
-       keyExtractor={item=>item.id}
+       g keyExtractor={(item) => item.id.toString()}
        renderItem={itemData => <PlaceItem 
        image={itemData.item.imageUri} 
        title={itemData.item.title}
